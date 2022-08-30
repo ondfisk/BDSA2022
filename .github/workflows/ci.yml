@@ -3,9 +3,9 @@ name: Build and Test
 
 on:
   push:
-    # branches:
-    #   - main
-    #   - "*.md"
+    branches:
+      - main
+      - "*.md"
 
   pull_request:
     branches:
