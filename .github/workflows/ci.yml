@@ -1,0 +1,48 @@
+---
+name: Build and Test
+
+on:
+  push:
+    # branches:
+    #   - main
+    #   - "*.md"
+
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - "*.md"
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release
+
+      - name: Test
+        run: dotnet test --collect:"XPlat Code Coverage"
+
+      - name: Generate Report
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.1.9
+        with:
+          reports: coverage.xml
+          targetdir: coveragereport
+          reporttypes: HtmlInline;Cobertura # The output formats and scope (separated by semicolon) Values: Badges, Clover, Cobertura, CsvSummary, Html, Html_Dark, Html_Light, HtmlChart, HtmlInline, HtmlInline_AzurePipelines, HtmlInline_AzurePipelines_Dark, HtmlInline_AzurePipelines_Light, HtmlSummary, JsonSummary, Latex, LatexSummary, lcov, MarkdownSummary, MHtml, PngChart, SonarQube, TeamCitySummary, TextSummary, Xml, XmlSummary
+          verbosity: Info
+          tag: ${{ github.run_number }}_${{ github.run_id }}
+          toolpath: reportgeneratortool
