@@ -85,7 +85,7 @@ jobs:
             echo "::add-mask::$CONTAINER_REGISTRY_PASSWORD"
             echo "CONTAINER_REGISTRY_PASSWORD=$CONTAINER_REGISTRY_PASSWORD" >> $GITHUB_ENV
 
-      - uses: azure/docker-login@v1
+      - uses: azure/docker-login@v2
         with:
           login-server: ${{ env.CONTAINER_REGISTRY }}.azurecr.io
           username: ${{ env.CONTAINER_REGISTRY }}
