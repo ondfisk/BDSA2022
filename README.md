@@ -1,3 +1,3 @@
-# lecture-code
+# BDSA2022
 
-Code for C♯ part
+Analysis, Design and Software Architecture (Autumn 2022)
